@@ -1,0 +1,84 @@
+h1 {margin:0 0 10px 0;width:100%;font-size: 22px;font-weight: normal;}
+      
+.social-networks {margin:25px 10px;}
+.popular-search {margin-left: 0;margin-bottom: 0;margin-top:0;}
+
+.newsletter-box-1 {border-radius: 7px 7px 0 0;-moz-border-radius: 7px 7px 0 0;-webkit-border-radius: 7px 7px 0 0;margin-bottom: 5px;}
+.top-segments-box {border-radius: 0;-moz-border-radius: 0;-webkit-border-radius: 0;margin:0;border-bottom: none;}
+
+.image-box {float:left;clear:both;width: 100%;margin:30px 0;}
+.image-box a {float:right;}
+.image-box a:first-child {float: left;}
+
+.destination-img {
+    padding-top: 0px; 
+    margin-top: 28px;
+    padding-right: 0px;
+}
+.destinations-map {float:left;position: relative;margin-top: 50px}
+.destinations-map a {position: absolute;color: #006699;font-size: 14px;}
+.destinations-map a:after{content:" »";}
+.destinations-map a#pole-1 {left: 110px;top: 10px;}
+.destinations-map a#pole-2 {left: 485px;top: 145px;}
+.destinations-map a#pole-3 {left: 205px;top: 10px;}
+.destinations-map a#pole-4 {left: 155px;top: 108px;}
+.destinations-map a#pole-5 {left: 445px;top: 235px;}
+.destinations-map a#pole-6 {left: 358px;top: 45px;}
+.destinations-map a#pole-7 {left: 393px;top: 61px;}
+.destinations-map a#pole-8 {left: 340px;top: 30px;}
+.destinations-map a#pole-10 {left: 385px;top: 130px;}
+.destinations-map a#pole-11 {left: 175px;top: 78px;}
+.destinations-map a#pole-13 {left: -5px;top: 50px;}
+.destinations-map a#pole-14 {left: 236px;top: 123px;}
+.destinations-map a#pole-16 {left: 220px;top: 45px;}
+.destinations-map a#pole-17 {left: 348px;top: 90px;}
+.destinations-map a#pole-18 {left: 550px;top: 165px;}
+.destinations-map a#pole-19 {left: 20px;top: 132px;}
+.destinations-map a#pole-20 {left: 400px;top: 195px;}
+.destinations-map a#pole-21 {left: 485px;top: 195px;}
+.destinations-map a#pole-22 {left: 305px;top: 117px;width: 60px;text-align: center;}
+
+.accordion .accordion-item .item-title div {float:right;margin:12px 10px 0 0;}
+.accordion .accordion-item .item-title div .price {width: 70px;color: #7f7f7f;padding-left: 5px;}
+.accordion .accordion-item .item-title div .price b {color:#ff0000;clear: both;}
+.accordion .accordion-item .item-title div a:after {content:" »";}
+.accordion .accordion-item .item-content .description {float:left;width:70%; text-align:justify;padding-right: 10px;}
+.accordion .accordion-item .item-content .description a {float: left;max-width: 50%;}
+.accordion .accordion-item .item-content .description a:last-child {float: right;}
+.accordion .accordion-item .item-content .description a:after {content:" »";}
+.accordion .accordion-item .item-content > a {float:left;width:30%;padding:15px 15px 0 10px;}
+.accordion .accordion-item .item-content > a img {float:left;width: 100%;border:1px solid #c1c1c1;}
+
+.weather-box {border-radius: 0;-moz-border-radius: 0;-webkit-border-radius: 0;margin:2px 0 0 0;border-bottom: none;}
+.weather-box .box-content {padding: 15px 0 10px 0;}
+.weather-box .box-content div {float: left;width: 20%;font-size: 16px;padding: 15px 5px;border-right: 1px solid #eee;border-left: 1px solid #eee;text-align: center;}
+.weather-box .box-content div:first-child {width: 40%;border:none;font-size: 14px;font-weight: normal;}
+
+@media (max-width:979px) {
+    .header-section {display: none;}
+}
+
+@media (max-width:610px) {
+    .image-box a {float:left;margin-left: 5px;margin-bottom: 10px;width:48%;max-width: 300px;}
+    .image-box a img {width:100%;}
+}
+
+@media (max-width:547px) {
+    .accordion .accordion-item .item-content .description {clear: both;padding:10px;width: 100%;}
+    .accordion .accordion-item .item-content > a {width:50%;}
+}
+
+@media (max-width:500px) {
+    .accordion .accordion-item .item-content .description a {float:left !important;max-width:100%;clear: both;margin-bottom: 5px;}
+}
+@media screen and (max-width: 360px) {
+    .destinations-map a {font-size: 11px;}
+    .destination-img {
+        padding-top: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .destinations-map a {font-size: 11px;}
+}

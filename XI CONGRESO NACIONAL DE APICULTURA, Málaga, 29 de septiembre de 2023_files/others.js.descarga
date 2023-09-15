@@ -1,0 +1,188 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+$('#myCarousel').carousel({
+	interval:   4000
+});
+    $(document).ready(function() {
+     
+      $("#owl-demo-venue").owlCarousel({
+     
+        items : 6, //10 items above 1000px browser width
+        itemsDesktop : [1000,4], //5 items between 1000px and 901px
+        itemsDesktopSmall : [900,4], // 3 items betweem 900px and 601px
+        itemsTablet: [600,3], //2 items between 600 and 0;
+        itemsTablet: [400,2], //2 items between 600 and 0;
+        itemsMobile: [360,1], //2 items between 600 and 0;
+        pagination: true, // Pagination disabled
+        responsive: 	true
+      });
+	  $("#owl-demo-header").owlCarousel({
+			animateOut: 'fadeOut',
+			items:1,
+			stagePadding:0,
+			smartSpeed:450,
+			pagination: true, // Pagination disabled
+			responsive: true,
+			autoWidth:true,
+			loop:true,
+			margin:10,
+			autoplay:true,
+			autoplayTimeout:1000,
+			autoplayHoverPause:true	 
+	 });
+    });
+
+
+     var target = null;
+$('.img_thumb').hover(function(e){
+    target = $(this);
+    $(target[0].firstElementChild).fadeIn(200);
+}, function(){
+    $(target[0].firstElementChild).fadeOut(200);
+});
+    $(document).ready(function() {
+
+      var owl = $("#owl-demo");
+
+      owl.owlCarousel({
+
+      items : 6, //10 items above 1000px browser width
+      itemsDesktop : [1000,4], //5 items between 1000px and 901px
+      itemsDesktopSmall : [900,4], // 3 items betweem 900px and 601px
+      itemsTablet: [600,3], //2 items between 600 and 0;
+      itemsTablet: [400,4], //2 items between 600 and 0;
+      itemsMobile : [370,3], // itemsMobile disabled - inherit from itemsTablet option
+      pagination: false // Pagination disabled      
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl.trigger('owl.prev');
+      })
+      $(".play").click(function(){
+        owl.trigger('owl.play',1000);
+      })
+      $(".stop").click(function(){
+        owl.trigger('owl.stop');
+      })
+
+
+    });
+
+$(function(){
+ 
+	$(document).on( 'scroll', function(){
+ 
+		if ($(window).scrollTop() > 100) {
+			$('.scroll-top-wrapper').addClass('show');
+		} else {
+			$('.scroll-top-wrapper').removeClass('show');
+		}
+	});
+});
+
+ 
+$(function(){
+ 
+	$(document).on( 'scroll', function(){
+ 
+		if ($(window).scrollTop() > 100) {
+			$('.scroll-top-wrapper').addClass('show');
+		} else {
+			$('.scroll-top-wrapper').removeClass('show');
+		}
+	});
+ 
+	$('.scroll-top-wrapper').on('click', scrollToTop);
+});
+ 
+function scrollToTop() {
+	verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+	element = $('body');
+	offset = element.offset();
+	offsetTop = offset.top;
+	$('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+}
+
+            $(document).ready(function ($) {
+                // delegate calls to data-toggle="lightbox"
+                $(document).delegate('*[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', 'click', function(event) {
+                    event.preventDefault();
+                    return $(this).ekkoLightbox({
+                        onShown: function() {
+                            if (window.console) {
+                                return console.log('Checking our the events huh?');
+                            }
+                        },
+						onNavigate: function(direction, itemIndex) {
+                            if (window.console) {
+                                return console.log('Navigating '+direction+'. Current item: '+itemIndex);
+                            }
+						}
+                    });
+                });
+
+                //Programatically call
+                $('#open-image').click(function (e) {
+                    e.preventDefault();
+                    $(this).ekkoLightbox();
+                });
+                $('#open-youtube').click(function (e) {
+                    e.preventDefault();
+                    $(this).ekkoLightbox();
+                });
+
+				// navigateTo
+                $(document).delegate('*[data-gallery="navigateTo"]', 'click', function(event) {
+                    event.preventDefault();
+
+                    var lb;
+                    return $(this).ekkoLightbox({
+                        onShown: function() {
+
+                            lb = this;
+
+							$(lb.modal_content).on('click', '.modal-footer a', function(e) {
+
+								e.preventDefault();
+								lb.navigateTo(2);
+
+							});
+
+                        }
+                    });
+                });
+
+
+            });
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+
+
+$(document).ready(function() {
+	$('#detalles').click(function(){
+		$('#itinerary_list').attr('action', APP_PATH_CULTURE+'/itinerary/details');
+	});
+	$('#reservation').click(function(){
+	   $('#itinerary_list').attr('action', APP_PATH_CULTURE+'/services/show');
+	});  
+	$('#cancel').click(function(){
+	   $('#itinerary_list').attr('action', APP_PATH_CULTURE+'/itinerary/cancel');
+	}); 
+	$('#itinerary_list').submit(function(e){
+		var TC=$('#tc-book').is(':checked'); 
+		if (TC == false){
+				$("#img-tc").css("display", "inline");
+				e.preventDefault();
+		}
+	});
+});

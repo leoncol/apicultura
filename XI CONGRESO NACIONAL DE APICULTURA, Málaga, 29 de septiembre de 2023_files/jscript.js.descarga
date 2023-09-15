@@ -1,0 +1,790 @@
+﻿function init() {
+    ie = (document.all) ? true : false
+    ns = (ie) ? false : true
+}
+
+function bgChange(celda, img)
+{
+    celda.style.background = "url(" + img + ")";
+}
+
+function gotoUrl(url) {
+    if (url != '#' && url.length > 0) {
+        //self.location.replace(url)
+        window.open(url, '_self');
+    }
+}
+
+function CheckSecCode()
+{
+    var myConn = new XHConn();
+    var secCode = document.getElementById('code').value;
+    var Obj = document.getElementById('codeOK'); // El id del div donde se cargaran las cosas
+    if (!myConn)
+        alert("XMLHTTP not available. Try a newer/better browser.");
+    var fnWhenDone = function(oXML) {
+        if (oXML.responseText == "0") {
+            alert(document.getElementById("wrong_sec_code").value);
+            document.getElementById('siimage').src = '/modules/abstracts/securimage_show.php?sid=' + Math.random();
+            document.getElementById("code").value = "";
+            document.getElementById("code").focus();
+        }
+        else
+            document.getElementById("form_send_abstract").submit();
+    };
+    myConn.connect("/modules/abstracts/check-sec-code.php", "POST", "code=" + secCode, fnWhenDone);
+}
+
+function CheckSecCode_C()
+{
+    var myConn = new XHConn();
+    var secCode = document.getElementById('code').value;
+    var Obj = document.getElementById('codeOK'); // El id del div donde se cargaran las cosas
+    if (!myConn)
+        alert("XMLHTTP not available. Try a newer/better browser.");
+    var fnWhenDone = function(oXML) {
+        if (oXML.responseText == "0") {
+            alert(document.getElementById("wrong_sec_code").value);
+            document.getElementById('siimage').src = '/modules/abstracts/securimage_show.php?sid=' + Math.random();
+            document.getElementById("code").value = "";
+            document.getElementById("code").focus();
+        }
+        else
+            document.getElementById("form_send_contact").submit();
+    };
+    myConn.connect("/modules/abstracts/check-sec-code.php", "POST", "code=" + secCode, fnWhenDone);
+}
+
+function CheckSecCode_B()
+{
+    var myConn = new XHConn();
+    var secCode = document.getElementById('code').value;
+    var Obj = document.getElementById('codeOK'); // El id del div donde se cargaran las cosas
+    if (!myConn)
+        alert("XMLHTTP not available. Try a newer/better browser.");
+    var fnWhenDone = function(oXML) {
+        if (oXML.responseText == "0") {
+            alert(document.getElementById("wrong_sec_code").value);
+            document.getElementById('siimage').src = '/modules/abstracts/securimage_show.php?sid=' + Math.random();
+            document.getElementById("code").value = "";
+            document.getElementById("code").focus();
+        }
+        else
+            document.getElementById("form_send_bulletin").submit();
+    };
+    myConn.connect("/modules/abstracts/check-sec-code.php", "POST", "code=" + secCode, fnWhenDone);
+}
+function valida_send_abstract() {
+    if (isEmpty("job_title")) {
+        alert(document.getElementById("empty_job_title").value);
+        return false;
+    }
+    ;
+    if (isEmpty("nomb1") || isEmpty("apellidos1")) {
+        alert(document.getElementById("empty_nomb1").value);
+        return false;
+    }
+    ;
+    if (isEmpty("organization_name")) {
+        alert(document.getElementById("empty_organization_name").value);
+        return false;
+    }
+    ;
+    if (isEmpty("email")) {
+        alert(document.getElementById("empty_email").value);
+        return false;
+    }
+    ;
+    if (!isMail_address(document.getElementById("email").value)) {
+        alert(document.getElementById("bad_email").value);
+        return false;
+    }
+    ;
+    if (isEmpty("uploadedfile1")) {
+        alert(document.getElementById("empty_uploadedfile").value);
+        return false;
+    }
+    ;
+    if (document.getElementById("hasCode").value == 1)
+        CheckSecCode();
+    else
+        document.getElementById("form_send_abstract").submit();
+}
+
+function valida_send_contact() {
+    if (isEmpty("name")) {
+        alert(document.getElementById("empty_name").value);
+        return false;
+    }
+    ;
+    if (isEmpty("comments")) {
+        alert(document.getElementById("empty_comments").value);
+        return false;
+    }    
+    if (isEmpty("email")) {
+        alert(document.getElementById("empty_email").value);
+        return false;
+    }
+    ;
+    if (!isMail_address(document.getElementById("email").value)) {
+        alert(document.getElementById("bad_email").value);
+        return false;
+    }
+    ;
+    if (document.getElementById("hasCodeC").value == 1)
+        CheckSecCode_C();
+    else {
+        document.getElementById("form_send_contact").submit();
+    }
+}
+
+function valida_send_bulletin() {
+    if (isEmpty("email")) {
+        alert(document.getElementById("empty_email").value);
+        return false;
+    }
+    ;
+    if (!isMail_address(document.getElementById("email").value)) {
+        alert(document.getElementById("bad_email").value);
+        return false;
+    }
+    ;
+    if (isEmpty("name")||!string_ok("name")) {
+        alert(document.getElementById("empty_name").value);
+        return false;
+    }
+    ;
+    if (isEmpty("apellidos")||!string_ok("apellidos")) {
+        alert(document.getElementById("empty_surname").value);
+        return false;
+    }
+    ;
+	if (isEmpty("birth_date")) {
+        alert(document.getElementById("empty_birth_date").value);
+        return false;
+    }
+    ;
+    if (!isDate(document.getElementById("birth_date").value)) {
+        alert(document.getElementById("bad_birth_date").value);
+        return false;
+    }
+    ;	
+    if (isEmpty("address")||!string_ok("address")) {
+        alert(document.getElementById("empty_address").value);
+        return false;
+    }
+    ;
+    if (isEmpty("state")||!string_ok("state")) {
+        alert(document.getElementById("empty_state").value);
+        return false;
+    }
+    ;
+    if (isEmpty("mobile")||!number_ok("mobile")) {
+        alert(document.getElementById("empty_mobile").value);
+        return false;
+    }
+    ;
+    if (checkTheBox() == false) {
+        alert(document.getElementById("empty_topic").value);
+        return false;
+    }
+    ;
+	if(!document.form_send_bulletin.policy_ok.checked) {
+		alert(document.getElementById("empty_policy").value);
+		return false;
+	}
+    if (document.getElementById("hasCodeB").value == 1)
+        CheckSecCode_B();
+    else {
+        document.getElementById("form_send_contact").submit();
+    }
+}
+
+function valida_personal_info() {
+    init();
+    for (var i = 1; i <= document.getElementById("cant_persons").value; i++) {
+        if (!name_ok("apellidos" + i)) {
+            alert(document.getElementById("msg_empty_surname").value);
+            return false;
+        };
+        if (!name_ok("nombre" + i)) {
+            alert(document.getElementById("msg_empty_name").value);
+            return false;
+        };
+        /*if (document.getElementById("extraDataPersonValue" + i) != null) {
+            var extra = document.getElementById("extraDataPersonValue" + i).value;
+            extra = extra.replace(' ', '');
+            if ((document.getElementById("extraDataPersonValue" + i) != null) && (extra.length == 0)) {
+                alert(document.getElementById("msg_empty").value);
+                document.getElementById("extraDataPersonValue" + i).focus();
+                return false;
+            }
+        }*/
+    }
+    if (!string_ok("company")) {
+        alert(document.getElementById("msg_empty_company").value);
+        return false;
+    }
+    if (!string_ok("address")) {
+        alert(document.getElementById("msg_empty_address").value);
+        return false;
+    }
+    if (!string_ok("country")) {
+        alert(document.getElementById("msg_empty_country").value);
+        return false;
+    }
+    if (!string_ok("province")) {
+        alert(document.getElementById("msg_empty_province").value);
+        return false;
+    }
+    if (!string_ok("zip_code")) {
+        alert(document.getElementById("msg_empty_zip_code").value);
+        return false;
+    }
+    if (!string_ok("city")) {
+        alert(document.getElementById("msg_empty_city").value);
+        return false;
+    }
+		
+    if (!phone_ok("phone")) {
+        alert(document.getElementById("msg_empty_telephone").value);
+        return false;
+    }	
+    if (isEmpty("email")) {
+        alert(document.getElementById("msg_empty_email").value);
+        return false;
+    }
+    if (!isMail_address(document.getElementById("email").value)) {
+        alert(document.getElementById("email").value);
+        alert(document.getElementById("msg_bad_email").value);
+        return false;
+    }
+    ;
+    if (!checktc1()) {
+        alert(document.getElementById("msg_bad_tc").value);
+        return false;
+    }	 	
+    disableBtnSubmit();
+    return true;
+}
+
+function valida_personal_info_donation() {
+    init();
+	if (!name_ok("nombre1")) {
+            alert(document.getElementById("msg_empty_name").value);
+            return false;
+    };
+    if (!name_ok("apellidos1")) {
+            alert(document.getElementById("msg_empty_surname").value);
+            return false;
+    }
+    for (var i = 2; i <= document.getElementById("cant_persons").value; i++) {
+        document.getElementById("nombre" + i).value=document.getElementById("nombre1").value
+		document.getElementById("apellidos" + i).value=document.getElementById("apellidos1").value
+        if (document.getElementById("extraDataPersonValue" + i) != null) {
+            var extra = document.getElementById("extraDataPersonValue" + i).value;
+            extra = extra.replace(' ', '');
+            if ((document.getElementById("extraDataPersonValue" + i) != null) && (extra.length == 0)) {
+                alert(document.getElementById("msg_empty").value);
+                document.getElementById("extraDataPersonValue" + i).focus();
+                return false;
+            }
+        }
+    }
+    if (!string_ok("company")) {
+        alert(document.getElementById("msg_empty_company").value);
+        return false;
+    }
+    if (!string_ok("address")) {
+        alert(document.getElementById("msg_empty_address").value);
+        return false;
+    }
+    if (!string_ok("country")) {
+        alert(document.getElementById("msg_empty_country").value);
+        return false;
+    }    	
+    if (!string_ok("province")) {
+        alert(document.getElementById("msg_empty_province").value);
+        return false;
+    }
+    if (!string_ok("zip_code")) {
+        alert(document.getElementById("msg_empty_zip_code").value);
+        return false;
+    }
+    if (!string_ok("city")) {
+        alert(document.getElementById("msg_empty_city").value);
+        return false;
+    }	
+    if (!number_ok("phone")) {
+        alert(document.getElementById("msg_empty_telephone").value);
+        return false;
+    }	
+    if (isEmpty("email")) {
+        alert(document.getElementById("msg_empty_email").value);
+        return false;
+    }
+    if (!isMail_address(document.getElementById("email").value)) {
+        alert(document.getElementById("msg_bad_email").value);
+        return false;
+    }
+    if (!email_ok(document.getElementById("email").value)) {
+        alert(document.getElementById("msg_bad_email").value);
+        return false;
+    }
+    if (!checktc1()) {
+        alert(document.getElementById("msg_bad_tc").value);
+        return false;
+    }	 	
+    disableBtnSubmit();
+    return true;
+}
+
+
+function checkTheBox() {
+	var flag = 0;
+	for (var i = 0; i< document.getElementById("kclose").value; i++) {
+		if(document.form_send_bulletin["topic[]"][i].checked){
+			flag ++;
+		}
+	}
+	if (flag > 0) return true;
+	else return false;
+}
+
+function checkTheBox1(lista) {
+	var elemento= document.getElementById(lista);
+	if (elemento.disabled == true) elemento.disabled=false;
+	else elemento.disabled=true
+	return true;
+}
+
+
+function checktc() {
+	var elemento= document.getElementById("tc-book");
+	if (elemento.checked == true) return true
+	else {
+		document.getElementById("img-tc").display = "block";
+		return false;
+	}
+}
+
+function checktc1() {
+	var elemento= document.getElementById("tc_ok");
+	if (elemento.checked == true) return true
+	else {
+		return false;
+	}
+}
+
+
+function itinerary(accion,lang){
+		valida_personal_info();
+		if (accion == 1) document.getElementById("pax_info").action = '/'+lang+'/itinerary/pax';
+		if (accion == 2) document.getElementById("pax_info").action = '/'+lang+'/services/book';
+		if (accion == 3) document.getElementById("pax_info").action = '/'+lang+'/itinerary/book';
+		document.getElementById("form_personal_info").submit();
+}
+
+
+function scart(accion,lang){
+		var ejec=true
+		if (accion == 1) document.getElementById("itinerary_list").action = '/'+lang+'/itinerary/cancel';
+		if (accion == 2) document.getElementById("itinerary_list").action = '/'+lang+'/itinerary/details'; 
+		if (accion == 3) document.form_personal_info.action = '/'+lang+'/services/show';
+		if (accion == 4) {
+			if (document.getElementById("tc-book").checked == true)	document.form_personal_info.action = '/'+lang+'/services/book';
+			else {
+				ejec=false;
+				document.getElementById("img-tc").display="block";
+				alert ("Debe aceptar los términos y condiciones");	
+				document.form_personal_info.action=false;			
+			}
+		}
+        if (ejec == true ) return true;
+		else return false;
+}
+ 
+function itinerary_send (){
+		var tc=document.getElementById("tc-book").checked
+		if (tc == false) {
+			document.getElementById("img-tc").disabled="block";
+			alert ("Debe aceptar los TC")
+			return false;
+		}
+		else return true;
+}   
+	var cant_persons = new Array()
+    cant_persons[0] = ["1|1", "2|2", "3|3", "4|4", "5|5", "6|6", "7|7", "8|8", "9|9", "10|10", "11|11", "12|12"];
+    cant_persons[1] = ["2|2", "4|4", "6|6", "8|8", "10|10", "12|12"];
+    cant_persons[2] = ["3|3", "6|6", "9|9", "12|12"];
+
+function update_cant_persons(selected_room_type_id,i) {
+		var lista="cant_persons"+i
+		var citieslist = document.getElementById(lista)
+        citieslist.options.length = 0;
+        if (selected_room_type_id >= 0) {
+            for (i = 0; i < cant_persons[selected_room_type_id].length; i++)
+                citieslist.options[citieslist.options.length] = new Option(cant_persons[selected_room_type_id][i].split("|")[0], cant_persons[selected_room_type_id][i].split("|")[1])
+        }
+}
+
+/*function isMail_address(str) {
+    return  ((str.indexOf('@') != -1) && (str.indexOf('@') != 0) && (str.indexOf('@') != str.length - 1) && (str.indexOf('.') != -1) && (str.indexOf('.') != 0) && (str.indexOf('.') != str.length - 1))
+
+}*/
+
+function isMail_address(str) {
+    return  ((str.indexOf('@') != -1) && (str.indexOf('@') != 0) && (str.indexOf('@') != str.length - 1) && (str.indexOf('.') != -1) && (str.indexOf('.') != 0) && (str.indexOf('.') != str.length - 1))
+
+}
+function checkEmail(emailAddress) {
+    var sQtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
+    var sDtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
+    var sAtom = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c\\x3e\\x40\\x5b-\\x5d\\x7f-\\xff]+';
+    var sQuotedPair = '\\x5c[\\x00-\\x7f]';
+    var sDomainLiteral = '\\x5b(' + sDtext + '|' + sQuotedPair + ')*\\x5d';
+    var sQuotedString = '\\x22(' + sQtext + '|' + sQuotedPair + ')*\\x22';
+    var sDomain_ref = sAtom;
+    var sSubDomain = '(' + sDomain_ref + '|' + sDomainLiteral + ')';
+    var sWord = '(' + sAtom + '|' + sQuotedString + ')';
+    var sDomain = sSubDomain + '(\\x2e' + sSubDomain + ')*';
+    var sLocalPart = sWord + '(\\x2e' + sWord + ')*';
+    var sAddrSpec = sLocalPart + '\\x40' + sDomain; // complete RFC822 email address spec
+    var sValidEmail = '^' + sAddrSpec + '$'; // as whole string
+
+    var reValidEmail = new RegExp(sValidEmail);
+
+    return reValidEmail.test(emailAddress);
+}
+
+function isDate(str) {
+    return  ((str.indexOf('-') != -1) && (str.indexOf('-') != 0) && (str.indexOf('-') != str.length - 1))
+
+}
+
+function datos_resumen() {
+    if (form1.select_modalidad.value == "1")
+        participant.style.display = 'block'
+    else
+        participant.style.display = 'none'
+}
+function show_div(show) {
+    if (show == true)
+        div.style.display = 'block'
+    else
+        div.style.display = 'none'
+}
+
+function isEmpty(id) {
+    var elem = document.getElementById(id);
+    if ((elem != null) && ((elem.value == null) || (elem.value == ""))) {
+        elem.focus();
+        return true;
+    } else
+        return false;
+}
+
+function show(id) {
+    document.getElementById(id).style.display = "block";
+}
+
+function hidex(id) {
+    document.getElementById(id).style.display = "none";
+}
+
+function authors(num) {
+    var cant = parseInt(num);
+    for (var i = 1; i <= cant; i++) {
+        show("author" + i);
+    }
+    for (var i = cant+1; i <= 10; i++) {
+        hidex("author" + i);
+    }
+}
+
+
+function valida_invoice() {
+    init();
+    if (!string_ok("company")) {
+        alert(document.getElementById("msg_empty_company").value);
+        return false;
+    }
+    if (!string_ok("address")) {
+        alert(document.getElementById("msg_empty_address").value);
+        return false;
+    }
+    if (!string_ok("province")) {
+        alert(document.getElementById("msg_empty_province").value);
+        return false;
+    }
+    if (!string_ok("city")) {
+        alert(document.getElementById("msg_empty_city").value);
+        return false;
+    }
+    if (!string_ok("country")) {
+        alert(document.getElementById("msg_empty_country").value);
+        return false;
+    }    	
+    if (!email_ok("email")) {
+        alert(document.getElementById("msg_empty_email").value);
+        return false;
+    }
+    if ((document.getElementById("aeroplan_in")) && (!string_ok("aeroplan_in"))) {
+        alert(document.getElementById("msg_empty_aeroplan").value);
+        return false;
+    }
+    if ((document.getElementById("aeroplan_out")) && (!string_ok("aeroplan_out"))) {
+        alert(document.getElementById("msg_empty_aeroplan").value);
+        return false;
+    }
+    if ((document.getElementById("country")) && (!string_ok("country"))) {
+        alert(document.getElementById("msg_empty_country").value);
+        return false;
+    }
+    if (!number_ok("phone1")) {
+        alert(document.getElementById("msg_empty_telephone").value);
+        return false;
+    }
+    if (!number_ok("phone2")) {
+        alert(document.getElementById("msg_empty_telephone").value);
+        return false;
+    }
+    if (!number_ok("phone3")) {
+        alert(document.getElementById("msg_empty_telephone").value);
+        return false;
+    }    
+    disableBtnSubmit();
+
+    return true;
+}
+
+function valida_acreditation() {
+	init();
+	//alert ('entre');
+	var selection = false;
+	var cant=document.getElementById("cant_serv").value
+	var i=0;
+	var elemento='';
+	//alert (cant);
+	for (i = 0; i < cant; i++) {
+		elemento="accreditation_xml"+i
+		if (document.getElementById(elemento).checked == true) selection = true;
+	}
+	if (selection == true) {
+		disableBtnSubmit();
+		return true;
+	}
+	else {
+		alert(document.getElementById("empty_registration").value);
+		return false;
+	}
+}
+function valida_bulletin_info() {
+    init();
+    if (!email_ok("email")) {
+        alert(document.getElementById("msg_empty_email").value);
+        return false;
+    }
+    if (!string_ok("company")) {
+        alert(document.getElementById("msg_empty_company").value);
+        return false;
+    }
+    if (!string_ok("address")) {
+        alert(document.getElementById("msg_empty_address").value);
+        return false;
+    }
+    if (!string_ok("province")) {
+        alert(document.getElementById("msg_empty_province").value);
+        return false;
+    }
+    if (!string_ok("city")) {
+        alert(document.getElementById("msg_empty_city").value);
+        return false;
+    }
+    
+    if (!string_ok("country")) {
+        alert(document.getElementById("msg_empty_country").value);
+        return false;
+    }    
+    if ((document.getElementById("aeroplan_in")) && (!string_ok("aeroplan_in"))) {
+        alert(document.getElementById("msg_empty_aeroplan").value);
+        return false;
+    }
+    if ((document.getElementById("aeroplan_out")) && (!string_ok("aeroplan_out"))) {
+        alert(document.getElementById("msg_empty_aeroplan").value);
+        return false;
+    }
+    if ((document.getElementById("country")) && (!string_ok("country"))) {
+        alert(document.getElementById("msg_empty_country").value);
+        return false;
+    }
+    if (!string_ok("zip_code")) {
+        alert(document.getElementById("msg_empty_zip_code").value);
+        return false;
+    }
+    if (!number_ok("phone1")) {
+        alert(document.getElementById("msg_empty_telephone").value);
+        return false;
+    }
+    if (!number_ok("phone2")) {
+        alert(document.getElementById("msg_empty_telephone").value);
+        return false;
+    }
+    if (!number_ok("phone3")) {
+        alert(document.getElementById("msg_empty_telephone").value);
+        return false;
+    }
+    if (!isEmpty("fax1") && !number_ok("fax1")) {
+        alert(document.getElementById("msg_empty_fax").value);
+        return false;
+    }
+    if (!isEmpty("fax1") && !number_ok("fax2")) {
+        alert(document.getElementById("msg_empty_fax").value);
+        return false;
+    }
+    if (!isEmpty("fax1") && !number_ok("fax3")) {
+        alert(document.getElementById("msg_empty_fax").value);
+        return false;
+    }
+    
+    disableBtnSubmit();
+
+    return true;
+}
+
+function disableBtnSubmit() {
+    $('#btnSubmit').hide();
+    $("#ajaxLoader").show();    
+    return true;
+}
+
+
+function string_ok(id) {
+    var re = /^[0-9a-zA-ZÁáÉéÍíÓóÚúÑñ\;\:\,\*\#\+\.\\\[\]\(\)\-\_\/\[\] ]+$/;
+    if (document.getElementById(id) != null) {
+        if ((document.getElementById(id).value != null) && (re.test(document.getElementById(id).value))) {
+            return true;
+        }
+        else {
+            document.getElementById(id).focus();
+            return false;
+        }
+    }
+    return true;
+}
+
+function email_ok(id) {
+    var re = /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/;
+    if ((document.getElementById(id).value != null) && (re.test(document.getElementById(id).value))) {
+        return true;
+    }
+    else {
+        document.getElementById(id).focus();
+        return false;
+    }
+}
+
+function name_ok(id) {
+    var re = /^[a-zA-ZÁáÉéÍíÓóÚúÑñ ]+$/;
+    if ((document.getElementById(id).value != null) && (re.test(document.getElementById(id).value))) {
+        return true;
+    }
+    else {
+        document.getElementById(id).focus();
+        return false;
+    }
+}
+function phone_ok(id) {
+    var re = /^[0-9\(\)\- ]+$/;
+    if ((document.getElementById(id).value != null) && (re.test(document.getElementById(id).value))) {
+        return true;
+    }
+    else {
+        document.getElementById(id).focus();
+        return false;
+    }
+}
+
+function number_ok(id) {
+    var re = /^\d+$/;
+    if ((document.getElementById(id).value != null) && (re.test(document.getElementById(id).value))) {
+        return true;
+    }
+    else {
+        document.getElementById(id).focus();
+        return false;
+    }
+}
+
+function Change(palaceposition) {
+    var node = document.all.item("palace");
+    if (node != null) {
+        if (node.length > 0) {
+            for (j = 0; j < node.length; j++) {
+                if (j == palaceposition)
+                    node(j).style.display = "";
+                else
+                    node(j).style.display = "none";
+            }
+        }
+        else {
+            if (node.style.display == "none")
+                node.style.display = "";
+            else
+                node.style.display = "none";
+        }
+    }
+}
+
+function change_date(date1, date2, direction) {
+    date1_arr = date1.split("-");
+    date2_arr = date2.split("-");
+    switch (direction) {
+        case "+":
+            if (date1_arr[2] >= date2_arr[2]) {
+                date2_arr[2] = parseInt(date1_arr[2]) + 1;
+                if ((parseInt(date2_arr[2]) <= 9) && (parseInt(date2_arr[2]) >= 1))
+                    date2_arr[2] = "0" + date2_arr[2];
+            }
+            break;
+        case "-":
+            if (date1_arr[2] <= date2_arr[2]) {
+                date2_arr[2] = parseInt(date1_arr[2]) - 1;
+                if ((parseInt(date2_arr[2]) <= 9) && (parseInt(date2_arr[2]) >= 1))
+                    date2_arr[2] = "0" + date2_arr[2];
+            }
+            break;
+    }
+    return date2_arr[0] + "-" + date2_arr[1] + "-" + date2_arr[2];
+}
+
+function index_of_select(select1, value) {
+    index = -1;
+    for (i = 0; document.getElementById(select1).length - 1; i++) {
+        if (document.getElementById(select1).options[i].value == value) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+function change_select(select1, select2, direction,lang) {
+	date2 = change_date(document.getElementById(select1).value, document.getElementById(select2).value, direction);
+    if (index_of_select(select2, date2) != -1) {
+        document.getElementById(select2).selectedIndex = index_of_select(select2, date2);
+    }
+	var url=''
+	url = '/'+lang+'/hotel_pyth/hotel_form'
+	submitform('form1', url)
+}
+
+function submitform(form, page) {
+    document.getElementById(form).action = page;
+    document.getElementById(form).submit();
+}
+
+function change_selection_index(id_change, id_changevalue)
+{
+    document.getElementById(id_change).selectedIndex = document.getElementById(id_changevalue).selectedIndex;
+}
